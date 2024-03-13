@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
@@ -39,6 +40,26 @@ class UrlController extends Controller
         //crypt($request->url, 100)
         //md5($request->url)
         //crc32($request->url)
+//        $key = env("VIRUS_TOTAL_KEY", null);
+//        if ($key == "") {
+//            $key = null;
+//        }
+//        if ($key == null) {
+//            dd("Add VIRUS_TOTAL_KEY in .env file");
+//        }
+//        $response = Http::withHeaders([
+//            "x-apikey" => $key
+//        ])->get('https://www.virustotal.com/api/v3/analyses/u-51c26ffaa37c7a019a6fc71fa5266034b768d312df8fe49f5926cef49b5f9b47-1710343281');
+//
+//        $body = json_decode($response->body());
+//
+//
+//        dd($body->data->attributes->malicious);
+        ///////// virus total async processing does not fit with sync style of this application//////////
+
+//        dd($key);
+
+
         $latest = Url::latest()->first();
         $url = $this->convBase($latest->id ?? 0, "0123456789", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
         //dd($latest);
