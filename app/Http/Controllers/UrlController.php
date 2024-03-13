@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreUrlRequest;
 use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 
@@ -51,9 +52,10 @@ class UrlController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Url $url)
+    public function show(Url $url, string $id): RedirectResponse
     {
-        //
+        $url = Url::where("new_url", $id)->first();
+        return Redirect::to($url->org_url);
     }
 
     /**

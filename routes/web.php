@@ -9,6 +9,7 @@ use Inertia\Inertia;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/{id}', [UrlController::class, 'show'])->name('url.show');
 Route::post('/add_url', [UrlController::class, 'store'])->name('url.add');
 
 Route::get('/welcome', function () {
