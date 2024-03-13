@@ -1,22 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UrlController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home', [
-        'boom' => microtime(),
-    ]);
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::post('/add_url', function (Request $request) {
-    echo "hello";
-
-    return to_route('home');
-});
-
+Route::post('/add_url', [UrlController::class, 'store'])->name('url.add');
 
 Route::get('/welcome', function () {
     return Inertia::render('Welcome', [

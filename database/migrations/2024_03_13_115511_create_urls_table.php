@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
+            $table->string('org_url')->unique();
+            $table->string('new_url')->unique();
             $table->timestamps();
         });
     }
