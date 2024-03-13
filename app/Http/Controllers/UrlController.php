@@ -44,7 +44,7 @@ class UrlController extends Controller
         if ($exists) {
            $good = $exists->new_url;
         } else {
-            $latest = Url::latest()->first();
+            $latest = Url::latest("id")->first();
             $url = $this->convBase($latest->id ?? 0, "0123456789", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
             Url::create([

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('urls', function (Blueprint $table) {
             $table->id();
             $table->string('org_url')->unique();
-            $table->string('new_url')->unique();
+            $table->string('new_url')->charset('utf8mb4')->collation('utf8mb4_0900_as_cs')->unique();
             $table->timestamps();
         });
     }
