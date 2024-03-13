@@ -6,6 +6,19 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
+    return Inertia::render('Home', [
+        'boom' => microtime(),
+    ]);
+});
+
+Route::post('/add_url', function (Request $request) {
+    echo "hello";
+
+    return to_route('home');
+});
+
+
+Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
