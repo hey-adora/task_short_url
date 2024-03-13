@@ -13,7 +13,8 @@ class HomeController extends Controller
         $urls = Url::orderBy('created_at', 'desc')->get();
         return Inertia::render('Home', [
             'boom' => microtime(),
-            'urls' => $urls
+            'urls' => $urls,
+            'good' => session('good')
         ]);
     }
 }

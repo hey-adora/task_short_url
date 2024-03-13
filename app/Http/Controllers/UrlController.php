@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateUrlRequest;
 use App\Models\Url;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
+use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\RedirectResponse;
 
@@ -34,7 +35,7 @@ class UrlController extends Controller
     public function store(StoreUrlRequest $request): RedirectResponse
     {
         $request->validate([
-            "url" => ['required', 'url:http,https', "unique:urls,org_url"]
+            "url" => ['required', 'url:http,https']
         ]);
 
         //crypt($request->url, 100)
@@ -59,15 +60,47 @@ class UrlController extends Controller
 
 //        dd($key);
 
+        $good = null;
+        $exists = Url::where("org_url", $request->url)->first();
+        //dd($exists);
+        if ($exists) {
+           $good = $exists->new_url;
 
-        $latest = Url::latest()->first();
-        $url = $this->convBase($latest->id ?? 0, "0123456789", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        //dd($latest);
-        Url::create([
-            "org_url" => $request->url,
-            "new_url" => $url
+
+
+        } else {
+//            $urls = Url::orderBy('created_at', 'desc')->get();
+//            return Inertia::render('Home', [
+//                'added' => $url,
+//                'urls' => $urls
+//            ]);
+            $latest = Url::latest()->first();
+            $url = $this->convBase($latest->id ?? 0, "0123456789", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+            //dd($latest);
+            Url::create([
+                "org_url" => $request->url,
+                "new_url" => $url
+            ]);
+
+            $good = $url;
+
+        }
+
+
+
+        return to_route('home')->with([
+            "good" => $good
         ]);
-        return to_route('home');
+
+
+//        return redirect()->route('home', [
+//            "good" => "sfsdfsdfsdfsd"
+//        ]);
+//        return to_route('home')->withInput([
+//            "good" => "sfsdfsdfsdfsd"
+//        ]);
+
     }
 
     /**

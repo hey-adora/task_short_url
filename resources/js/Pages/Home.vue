@@ -3,7 +3,7 @@ import {Head, Link, router} from '@inertiajs/vue3';
 import {reactive} from "vue";
 
 defineProps<{
-    boom: string,
+    good?: string,
     urls: {
         org_url: string,
         new_url: string
@@ -66,6 +66,11 @@ function copy(text: string) {
                     <input v-model="form.url" type="text" placeholder="https://google.com" class="border outline-none border-pink-500 bg-white/20 rounded-l  p-1 px-2 " style="max-width: 720px; width: calc(100vw - 4rem - 1rem)">
                     <input type="submit" value="ADD" class="bg-pink-500 hover:bg-pink-400 cursor-pointer rounded-r w-16 font-black ">
                 </form>
+                <div v-if="!errors?.url && good" class="bg-green-400 px-2 py-1 font-black flex ">
+                    <button @click="copy(`${host}/${good}`)" class="border-t-2 border-b-2 border-l-2 border-white hover:bg-green-300 px-2 text-white bg-green-400 font-black whitespace-nowrap">COPY NEW URL</button>
+                    <input class="bg-transparent w-full border-2 border-white px-2" :value="`${host}/${good}`">
+
+                </div>
                 <div v-if="errors?.url" class="bg-red-600 px-2 font-black">Error: {{errors?.url}}</div>
             </div>
             <h2 class="text-cyan-400 font-black text-2xl mt-8">HISTORY</h2>
