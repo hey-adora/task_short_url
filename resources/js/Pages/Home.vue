@@ -67,9 +67,8 @@ function copy(text: string) {
                     <input type="submit" value="ADD" class="bg-pink-500 hover:bg-pink-400 cursor-pointer rounded-r w-16 font-black ">
                 </form>
                 <div v-if="!errors?.url && good" class="bg-green-400 px-2 py-1 font-black flex ">
-                    <button @click="copy(`${host}/${good}`)" class="border-t-2 border-b-2 border-l-2 border-white hover:bg-green-300 px-2 text-white bg-green-400 font-black whitespace-nowrap">COPY NEW URL</button>
+                    <button @click="copy(`${host}/${good}`)" class="border-t-2 border-b-2 border-l-2 border-white hover:bg-green-50 px-2 text-green-400 bg-white font-black whitespace-nowrap">COPY NEW URL</button>
                     <input class="bg-transparent w-full border-2 border-white px-2" :value="`${host}/${good}`">
-
                 </div>
                 <div v-if="errors?.url" class="bg-red-600 px-2 font-black">Error: {{errors?.url}}</div>
             </div>

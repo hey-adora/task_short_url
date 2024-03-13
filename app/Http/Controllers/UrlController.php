@@ -38,69 +38,26 @@ class UrlController extends Controller
             "url" => ['required', 'url:http,https']
         ]);
 
-        //crypt($request->url, 100)
-        //md5($request->url)
-        //crc32($request->url)
-//        $key = env("VIRUS_TOTAL_KEY", null);
-//        if ($key == "") {
-//            $key = null;
-//        }
-//        if ($key == null) {
-//            dd("Add VIRUS_TOTAL_KEY in .env file");
-//        }
-//        $response = Http::withHeaders([
-//            "x-apikey" => $key
-//        ])->get('https://www.virustotal.com/api/v3/analyses/u-51c26ffaa37c7a019a6fc71fa5266034b768d312df8fe49f5926cef49b5f9b47-1710343281');
-//
-//        $body = json_decode($response->body());
-//
-//
-//        dd($body->data->attributes->malicious);
-        ///////// virus total async processing does not fit with sync style of this application//////////
-
-//        dd($key);
-
         $good = null;
         $exists = Url::where("org_url", $request->url)->first();
-        //dd($exists);
+
         if ($exists) {
            $good = $exists->new_url;
-
-
-
         } else {
-//            $urls = Url::orderBy('created_at', 'desc')->get();
-//            return Inertia::render('Home', [
-//                'added' => $url,
-//                'urls' => $urls
-//            ]);
             $latest = Url::latest()->first();
             $url = $this->convBase($latest->id ?? 0, "0123456789", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
-            //dd($latest);
             Url::create([
                 "org_url" => $request->url,
                 "new_url" => $url
             ]);
 
             $good = $url;
-
         }
-
-
 
         return to_route('home')->with([
             "good" => $good
         ]);
-
-
-//        return redirect()->route('home', [
-//            "good" => "sfsdfsdfsdfsd"
-//        ]);
-//        return to_route('home')->withInput([
-//            "good" => "sfsdfsdfsdfsd"
-//        ]);
-
     }
 
     /**
